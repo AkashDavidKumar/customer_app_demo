@@ -3,6 +3,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RootNavigator } from './src/navigation/RootNavigator';
+import { Toast } from './src/components/common/Toast';
 
 // Initialize the TanStack Query Client for managing server states
 const queryClient = new QueryClient({
@@ -22,6 +23,7 @@ export default function App() {
         <NavigationContainer>
           <RootNavigator />
         </NavigationContainer>
+        <Toast />
       </QueryClientProvider>
     </SafeAreaProvider>
   );

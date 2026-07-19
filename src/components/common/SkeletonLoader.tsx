@@ -2,9 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import { Animated, StyleSheet, ViewStyle } from 'react-native';
 import { theme } from '../../theme';
 
+import { DimensionValue } from 'react-native';
+
 interface SkeletonLoaderProps {
-  width: number | string;
-  height: number | string;
+  width: DimensionValue;
+  height: DimensionValue;
   borderRadius?: number;
   style?: ViewStyle;
 }

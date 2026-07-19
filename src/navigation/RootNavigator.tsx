@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -8,6 +8,13 @@ import {
   AuthStackParamList,
   MainTabParamList,
 } from './types';
+
+// Auth Screens
+import { SplashScreen } from '../screens/auth/SplashScreen';
+import { LoginScreen } from '../screens/auth/LoginScreen';
+import { RegisterScreen } from '../screens/auth/RegisterScreen';
+import { ForgotPasswordScreen } from '../screens/auth/ForgotPasswordScreen';
+import { ResetPasswordScreen } from '../screens/auth/ResetPasswordScreen';
 
 // Dummy Screen Components for compile and flow check
 const DummyScreen = (name: string) => () => (
@@ -23,10 +30,10 @@ const Tab = createBottomTabNavigator<MainTabParamList>();
 const AuthNavigator = () => {
   return (
     <AuthStack.Navigator screenOptions={{ headerShown: false }}>
-      <AuthStack.Screen name="Login" component={DummyScreen('Login')} />
-      <AuthStack.Screen name="Register" component={DummyScreen('Register')} />
-      <AuthStack.Screen name="ForgotPassword" component={DummyScreen('ForgotPassword')} />
-      <AuthStack.Screen name="ResetPassword" component={DummyScreen('ResetPassword')} />
+      <AuthStack.Screen name="Login" component={LoginScreen} />
+      <AuthStack.Screen name="Register" component={RegisterScreen} />
+      <AuthStack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
+      <AuthStack.Screen name="ResetPassword" component={ResetPasswordScreen} />
     </AuthStack.Navigator>
   );
 };
@@ -44,6 +51,19 @@ const MainTabNavigator = () => {
 
 export const RootNavigator = () => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    // Artificial delay to ensure splash shows and rehydration occurs
+    const timer = setTimeout(() => {
+      setIsReady(true);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!isReady) {
+    return <SplashScreen />;
+  }
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>

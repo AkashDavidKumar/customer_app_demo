@@ -22,7 +22,7 @@ export const SafeContainer: React.FC<SafeContainerProps> = ({
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor }, style]} edges={edges}>
-      <StatusBar style={isDark ? 'light' : 'dark'} backgroundColor={backgroundColor} />
+      <StatusBar style={isDark ? 'light' : 'dark'} />
       {children}
     </SafeAreaView>
   );
