@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   ViewStyle,
   TextStyle,
+  Platform,
 } from 'react-native';
 import { theme } from '../../theme';
 
@@ -59,7 +60,11 @@ export const InputField: React.FC<InputFieldProps> = ({
       >
         {leftIcon && <View style={styles.leftIconContainer}>{leftIcon}</View>}
         <TextInput
-          style={[styles.input, inputStyle]}
+          style={[
+            styles.input, 
+            inputStyle, 
+            Platform.OS === 'web' && { outlineStyle: 'none' } as any
+          ]}
           placeholderTextColor={theme.colors.text.mutedLight}
           secureTextEntry={isSecure}
           onFocus={handleFocus}
@@ -105,12 +110,26 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.border.light,
     borderRadius: theme.radius.md,
     paddingHorizontal: theme.spacing.md,
+    overflow: 'hidden',
   },
   focusedBorder: {
     borderColor: theme.colors.primary.brand,
+    ...Platform.select({
+      web: {
+        boxShadow: `0 0 0 3px rgba(99, 102, 241, 0.15)`,
+      } as any,
+      default: {
+        elevation: 2,
+        shadowColor: theme.colors.primary.brand,
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        shadowOffset: { width: 0, height: 2 },
+      },
+    }),
   },
   errorBorder: {
     borderColor: theme.colors.status.error,
+    borderWidth: 1.5,
   },
   leftIconContainer: {
     marginRight: theme.spacing.sm,
@@ -118,9 +137,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   rightIconContainer: {
-    marginLeft: theme.spacing.sm,
+    width: 50,
+    flexShrink: 0,
+    marginLeft: theme.spacing.md,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-end',
   },
   input: {
     flex: 1,
@@ -128,6 +149,7 @@ const styles = StyleSheet.create({
     color: theme.colors.text.primaryLight,
     fontSize: theme.typography.sizes.md,
     paddingVertical: 0,
+    minWidth: 0,
   },
   passwordToggleText: {
     fontSize: theme.typography.sizes.sm,

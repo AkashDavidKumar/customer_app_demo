@@ -18,24 +18,27 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({ children, title, subtitl
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         <ScrollView
+          style={styles.scrollView}
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         >
-          {logo && (
-            <View style={styles.logoContainer}>
-              <View style={styles.placeholderLogo}>
-                <Text style={styles.logoText}>C</Text>
+          <View style={styles.cardContainer}>
+            {logo && (
+              <View style={styles.logoContainer}>
+                <View style={styles.placeholderLogo}>
+                  <Text style={styles.logoText}>C</Text>
+                </View>
               </View>
+            )}
+
+            <View style={styles.headerContainer}>
+              <Text style={styles.title}>{title}</Text>
+              {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
             </View>
-          )}
 
-          <View style={styles.headerContainer}>
-            <Text style={styles.title}>{title}</Text>
-            {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
+            <View style={styles.formContainer}>{children}</View>
           </View>
-
-          <View style={styles.formContainer}>{children}</View>
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeContainer>
@@ -44,19 +47,39 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({ children, title, subtitl
 
 const styles = StyleSheet.create({
   safeArea: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#F8FAFC',
   },
   keyboardView: {
     flex: 1,
   },
+  scrollView: {
+    flex: 1,
+    width: '100%',
+  },
   scrollContent: {
     flexGrow: 1,
-    padding: theme.spacing.xl,
-    justifyContent: 'center',
+    paddingTop: 16,
+    paddingBottom: 40,
+    paddingHorizontal: 16,
+    alignItems: 'center',
+  },
+  cardContainer: {
+    width: '100%',
+    maxWidth: 440,
+    backgroundColor: '#FFFFFF',
+    borderRadius: theme.radius.xl,
+    paddingHorizontal: 20,
+    paddingVertical: 24,
+    ...Platform.select({
+      web: {
+        boxShadow: '0 10px 25px rgba(0, 0, 0, 0.05)',
+      } as any,
+      default: theme.shadows.lg,
+    }),
   },
   logoContainer: {
     alignItems: 'center',
-    marginBottom: theme.spacing.xxl,
+    marginBottom: 24,
   },
   placeholderLogo: {
     width: 64,
@@ -73,7 +96,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   headerContainer: {
-    marginBottom: theme.spacing.xxl,
+    marginBottom: 32,
   },
   title: {
     fontSize: theme.typography.sizes.xxxl,

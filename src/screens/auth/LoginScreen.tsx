@@ -116,11 +116,11 @@ export const LoginScreen: React.FC = () => {
 
 const styles = StyleSheet.create({
   form: {
-    marginTop: theme.spacing.lg,
+    marginTop: 8,
   },
   forgotPasswordButton: {
     alignSelf: 'flex-end',
-    marginBottom: theme.spacing.xl,
+    marginBottom: 16,
   },
   forgotPasswordText: {
     color: theme.colors.primary.brand,
@@ -128,12 +128,13 @@ const styles = StyleSheet.create({
     fontSize: theme.typography.sizes.sm,
   },
   loginButton: {
-    marginBottom: theme.spacing.xl,
+    marginBottom: 16,
   },
   footer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingBottom: 8,
   },
   footerText: {
     color: theme.colors.text.secondaryLight,
